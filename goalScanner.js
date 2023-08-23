@@ -30,5 +30,7 @@ const interval = setInterval(function() {
             console.log('Gol não encontrado');
         }
     }
-
+    else {
+        console.log('Aguardando gol...');
+    }
 }, 1000);
