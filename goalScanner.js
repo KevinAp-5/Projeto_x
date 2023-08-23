@@ -9,6 +9,16 @@ const interval = setInterval(function() {
             times_gol = times_gol.parentElement;
         }
 
+        if (times_gol) {
+            console.log('Gol encontrado.')
+            const posicao = times_gol.getBoundingClientRect().toJSON();
+            const jsonString = JSON.stringify({
+                'x': posicao.x,
+                'y': posicao.y,
+                'width': window.innerWidth,
+                'height': window.innerHeight
+            })
+        }
     }
 
 }, 1000);
