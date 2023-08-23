@@ -18,6 +18,13 @@ const interval = setInterval(function() {
                 'width': window.innerWidth,
                 'height': window.innerHeight
             })
+
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            console.log('Enviando informação para o Python')
+            a.download = 'position.json';
+            a.click();
         }
     }
 
