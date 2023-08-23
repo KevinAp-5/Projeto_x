@@ -26,6 +26,9 @@ const interval = setInterval(function() {
             a.download = 'position.json';
             a.click();
         }
+        else {
+            console.log('Gol não encontrado');
+        }
     }
 
 }, 1000);
