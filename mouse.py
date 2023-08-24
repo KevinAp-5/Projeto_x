@@ -52,3 +52,6 @@ class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.2
         self.position = FileManagement().get_position()
+
+    def move(self):
+        ...
