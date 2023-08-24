@@ -14,3 +14,12 @@ class FileManagement:
             return True
         else:
             return False
+
+    def get_json(self):
+        position = dict()
+        with open(f'{self.downloads}/position.json', 'r+') as position_json:
+            position = load(position_json)
+            print('Posição capturada.')
+            self.can_delete = True
+            position_json.close()
+        return position
