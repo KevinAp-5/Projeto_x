@@ -36,3 +36,13 @@ class FileManagement:
         else:
             print("Não é possível remover arquivo.")
             return False
+
+    def get_position(self):
+        my_position = ''
+        if self.exist_position() is True:
+            my_position = self.get_json()
+        else:
+            print('Arquivo não existe ainda.')
+
+        self.delete_position()
+        return my_position
