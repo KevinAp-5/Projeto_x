@@ -46,3 +46,9 @@ class FileManagement:
 
         self.delete_position()
         return my_position
+
+
+class MoveMouse:
+    def __init__(self):
+        pyautogui.PAUSE = 0.2
+        self.position = FileManagement().get_position()
