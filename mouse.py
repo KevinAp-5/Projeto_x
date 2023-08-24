@@ -55,3 +55,8 @@ class MoveMouse:
 
     def move(self):
         ...
+
+
+if __name__ == '__main__':
+    x = MoveMouse()
+    print(x.position)
