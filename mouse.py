@@ -23,3 +23,16 @@ class FileManagement:
             self.can_delete = True
             position_json.close()
         return position
+
+    def delete_position(self):
+        if self.can_delete is True:
+            try:
+                os.remove(f'{self.downloads}/position.json')
+            except FileNotFoundError:
+                print('Arquivo não encontrado!!')
+                return False
+            print('File removed.')
+            return True
+        else:
+            print("Não é possível remover arquivo.")
+            return False
