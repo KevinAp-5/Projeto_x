@@ -1,8 +1,8 @@
 # --upgrade setuptools wheel
+wheel
 requests
 setuptools
-wheel
 pyproject-toml
 pillow
 pyautogui
-win32gui
+pypiwin32
