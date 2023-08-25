@@ -1,5 +1,6 @@
+# --update setuptools wheel
 setuptools
-pillow
 wheel
 pyproject-toml
+pillow
 pyautogui
