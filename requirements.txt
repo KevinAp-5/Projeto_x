@@ -1,2 +1,5 @@
+setuptools
+pillow
 wheel
+pyproject-toml
 pyautogui
