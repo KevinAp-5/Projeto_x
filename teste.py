@@ -1,4 +1,5 @@
 from ctypes import wintypes, windll, create_unicode_buffer
+from time import sleep
 
 def getForegroundWindowTitle():
     hWnd = windll.user32.GetForegroundWindow()
@@ -13,5 +14,7 @@ def getForegroundWindowTitle():
 
 
 if __name__ == '__main__':
+    print('wainting')
+    sleep(2)
     x = getForegroundWindowTitle()
-    printf(f'Janela ativa: {x}')
+    print(f'Janela ativa: {x}')
