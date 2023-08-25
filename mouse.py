@@ -1,6 +1,7 @@
 from json import load
 import os
 import pyautogui
+from glob import glob
 
 class FileManagement:
     def __init__(self):
@@ -27,7 +28,8 @@ class FileManagement:
     def delete_position(self):
         if self.can_delete is True:
             try:
-                os.remove(f'{self.downloads}/position.json')
+                for item in glob(f'{self.downloads}/position*.json'):
+                    os.remove(item)
             except FileNotFoundError:
                 print('Arquivo não encontrado!!')
                 return False
