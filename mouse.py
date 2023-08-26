@@ -1,9 +1,16 @@
 from json import load
 import os
 import pyautogui
+from sys import platform
 from glob import glob
+from time import sleep
 
-class FileManagement:
+if 'win' in platform:
+    from ctypes import wintypes, windll, create_unicode_buffer
+    from pywinauto import Desktop, Aplication
+
+
+class FileManager:
     def __init__(self):
         self.home = os.path.expanduser('~')
         self.downloads = self.home + '/Downloads'
@@ -53,7 +60,9 @@ class FileManagement:
 class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.2
-        self.position = FileManagement().get_position()
+        manager = FileManager()
+        manager.downloads = '.'  # Point for test json
+        self.position = manager.get_position()
 
     def move(self):
         ...
