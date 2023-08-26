@@ -57,6 +57,17 @@ class FileManager:
         return my_position
 
 
+class WindowManager:
+    def window_title(self):
+        hWnd = windll.user32.GetForegroundWindow()
+        length = windll.user32.GetWindowTextLengthW(hWnd)
+        buf = create_unicode_buffer(length + 1)
+        windll.user32.GetWindowTextW(hWnd, buf, length + 1)
+
+        if buf.value:
+            return str(buf.value)
+
+
 class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.2
