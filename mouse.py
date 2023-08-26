@@ -75,6 +75,18 @@ class MoveMouse:
         manager.downloads = '.'  # Point for test json
         self.position = manager.get_position()
 
+
+    def get_both(self, x_y=True):
+        a = list(self.position.items())
+        if x_y is True:  # return x, y
+            a = a[:2]
+        else:  # return width, height
+            a = a[2:]
+
+        x, y = a[0][1], a[1][1]
+        return x, y
+
+
     def move(self):
         ...
 
@@ -82,3 +94,5 @@ class MoveMouse:
 if __name__ == '__main__':
     x = MoveMouse()
     print(x.position)
+    x.get_both(False)
+    #x.move()
