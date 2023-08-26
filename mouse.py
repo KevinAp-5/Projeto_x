@@ -40,7 +40,7 @@ class FileManager:
             except FileNotFoundError:
                 print('Arquivo não encontrado!!')
                 return False
-            print('File removed.')
+            print('Arquivo removido.')
             return True
         else:
             print("Não é possível remover arquivo.")
@@ -86,7 +86,7 @@ class MoveMouse:
         return x, y
 
     def move(self):
-        x, y = self.get_xy()
+        x, y = self.get_both()
         pyautogui.moveTo(x, y)
 
 
