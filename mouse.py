@@ -13,11 +13,11 @@ if 'win' in platform:
 class FileManager:
     def __init__(self):
         self.home = os.path.expanduser('~')
-        self.downloads = self.home + '/Downloads'
+        self.path = self.home + '/Downloads'
         self.can_delete = False
 
     def exist_position(self):
-        if os.path.exists(f'{self.downloads}/position.json'):
+        if os.path.exists(f'{self.path}/position.json'):
             self.can_delete = False
             return True
         else:
@@ -25,7 +25,7 @@ class FileManager:
 
     def get_json(self):
         position = dict()
-        with open(f'{self.downloads}/position.json', 'r+') as position_json:
+        with open(f'{self.path}/position.json', 'r+') as position_json:
             position = load(position_json)
             print('Posição capturada.')
             self.can_delete = True
@@ -35,7 +35,7 @@ class FileManager:
     def delete_position(self):
         if self.can_delete is True:
             try:
-                for file in glob(f'{self.downloads}/position*.json'):
+                for file in glob(f'{self.path}/position*.json'):
                     os.remove(file)
             except FileNotFoundError:
                 print('Arquivo não encontrado!!')
@@ -72,9 +72,8 @@ class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.2
         manager = FileManager()
-        manager.downloads = '.'  # Point for test json
+        manager.path = '.'  # Point for test json
         self.position = manager.get_position()
-
 
     def get_both(self, x_y=True):
         a = list(self.position.items())
@@ -85,7 +84,6 @@ class MoveMouse:
 
         x, y = a[0][1], a[1][1]
         return x, y
-
 
     def move(self):
         x, y = self.get_xy()
