@@ -88,7 +88,8 @@ class MoveMouse:
 
 
     def move(self):
-        ...
+        x, y = self.get_xy()
+        pyautogui.moveTo(x, y)
 
 
 if __name__ == '__main__':
