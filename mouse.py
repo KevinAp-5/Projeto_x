@@ -105,6 +105,17 @@ class Flow:
         mouse.position_update()
 
 
+class WindowManager:
+    def window_title(self):
+        hWnd = windll.user32.GetForegroundWindow()
+        length = windll.user32.GetWindowTextLengthW(hWnd)
+        buf = create_unicode_buffer(length + 1)
+        windll.user32.GetWindowTextW(hWnd, buf, length + 1)
+
+        if buf.value:
+            return str(buf.value)
+
+
 if __name__ == '__main__':
     x = Flow().main()
     #x.move()
