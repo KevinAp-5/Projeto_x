@@ -34,12 +34,8 @@ class FileManager:
 
     def delete_position(self):
         if self.can_delete is True:
-            try:
-                for file in glob(f'{self.path}/position*.json'):
-                    os.remove(file)
-            except FileNotFoundError:
-                print('Arquivo não encontrado!!')
-                return False
+            for file in glob(f'{self.path}/position*.json'):
+                os.remove(file)
             print('Arquivo removido.')
             return True
         else:
