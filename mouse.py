@@ -43,25 +43,13 @@ class FileManager:
             return False
 
     def get_position(self):
-        my_position = ''
         if self.exist_position() is True:
             my_position = self.get_json()
+            self.delete_position()
+            print(my_position)
+            return my_position
         else:
-            print('Arquivo não existe ainda.')
-
-        self.delete_position()
-        return my_position
-
-
-class WindowManager:
-    def window_title(self):
-        hWnd = windll.user32.GetForegroundWindow()
-        length = windll.user32.GetWindowTextLengthW(hWnd)
-        buf = create_unicode_buffer(length + 1)
-        windll.user32.GetWindowTextW(hWnd, buf, length + 1)
-
-        if buf.value:
-            return str(buf.value)
+            return False
 
 
 class MoveMouse:
