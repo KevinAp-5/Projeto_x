@@ -54,7 +54,7 @@ class FileManager:
 
 class MoveMouse:
     def __init__(self):
-        pyautogui.PAUSE = 0.2
+        pyautogui.PAUSE = 0.01
         manager = FileManager()
         manager.path = '.'  # Point for test json
         self.manager = manager
