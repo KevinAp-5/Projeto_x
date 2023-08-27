@@ -57,16 +57,21 @@ class MoveMouse:
         pyautogui.PAUSE = 0.2
         manager = FileManager()
         manager.path = '.'  # Point for test json
-        self.position = manager.get_position()
+        self.manager = manager
 
     def get_both(self, x_y=True):
-        a = list(self.position.items())
-        if x_y is True:  # return x, y
-            a = a[:2]
-        else:  # return width, height
-            a = a[2:]
+        pos_dict = self.manager.get_position()
+        if pos_dict is False:
+            return False
+        else:
+            pos_dict = list(pos_dict.items())
 
-        x, y = a[0][1], a[1][1]
+        if x_y is True:  # return x, y
+            pos_dict = pos_dict[:2]
+        else:  # return width, height
+            pos_dict = pos_dict[2:]
+
+        x, y = pos_dict[0][1], pos_dict[1][1]
         return x, y
 
     def move(self):
