@@ -74,9 +74,20 @@ class MoveMouse:
         x, y = pos_dict[0][1], pos_dict[1][1]
         return x, y
 
-    def move(self):
-        x, y = self.get_both()
-        pyautogui.moveTo(x, y)
+    def move(self, x, y):
+        a = self.get_both()
+        x, y = None, None
+
+        if a is False:
+            return False
+        else:
+            x, y = a[0], a[1]
+
+        try:
+            pyautogui.moveTo(x, y)
+        except pyautogui.FailSafeException:
+            print('saída de segurança acionada.')
+            exit()
 
 
 if __name__ == '__main__':
