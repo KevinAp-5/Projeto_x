@@ -90,8 +90,21 @@ class MoveMouse:
             exit()
 
 
+class Flow:
+    def __init__(self):
+        ...
+
+    def main(self):
+        mouse = MoveMouse()
+        while True:
+            mouse.move()
+            try:
+                sleep(0.1)
+            except KeyboardInterrupt:
+                exit()
+        mouse.position_update()
+
+
 if __name__ == '__main__':
-    x = MoveMouse()
-    print(x.position)
-    x.get_both(False)
+    x = Flow().main()
     #x.move()
