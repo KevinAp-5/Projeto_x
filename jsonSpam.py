@@ -16,7 +16,7 @@ while True:
         except KeyboardInterrupt:
             continue
     else:
-        print('aguardando...')
+        print('aguardando delete...')
         try:
             sleep(2)
         except KeyboardInterrupt:
