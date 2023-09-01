@@ -96,8 +96,20 @@ class Flow:
 
     def main(self):
         mouse = MoveMouse()
+        i = 0
+        x, y = 0, 0
         while True:
-            mouse.move()
+            i = mouse.get_both()
+
+            if type(i) != bool:
+                x, y = i[0], i[1]
+                break
+            else:
+                print('aguardando arquivo\t', end='\r', flush=True)
+                sleep(0.1)
+
+        while True:
+            mouse.move(x, y)
             try:
                 sleep(0.1)
             except KeyboardInterrupt:
