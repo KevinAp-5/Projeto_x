@@ -14,7 +14,7 @@ while True:
         try:
             sleep(2)
         except KeyboardInterrupt:
-            continue
+            exit()
     else:
         print('aguardando delete...')
         try:
