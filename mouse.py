@@ -7,7 +7,7 @@ from time import sleep
 
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
-    from pywinauto import Desktop, Aplication
+#    from pywinauto import Desktop, Aplication
 
 
 class FileManager:
@@ -86,6 +86,7 @@ class MoveMouse:
         nome = json_info[4]
 
         while 'bet' not in WindowManager().window_title():
+            print('aguardando voltar para janela da bet...', end='\r', flush=True)
             sleep(0.1)
 
         pyautogui.moveTo(x=x+15)
