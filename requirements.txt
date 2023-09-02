@@ -6,3 +6,4 @@ pyproject-toml
 pillow
 pyautogui
 pypiwin32
+pywinauto
