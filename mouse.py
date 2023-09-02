@@ -4,7 +4,6 @@ import pyautogui
 from sys import platform
 from glob import glob
 from time import sleep
-from plyer import notification
 
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
@@ -100,7 +99,6 @@ class MoveMouse:
             a = y
         scrollada = int(a/100)
 
-#        notification.notify(title=f'x={x}, y={y}', timeout=3)
         sleep(4)
         pyautogui.hotkey('esc')
 
