@@ -7,3 +7,5 @@ pillow
 pyautogui
 pypiwin32
 pywinauto
+pyautogui
+pywin32
