@@ -4,6 +4,7 @@ import pyautogui
 from sys import platform
 from glob import glob
 from time import sleep
+from plyer import notification
 
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
@@ -56,15 +57,17 @@ class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.01
         manager = FileManager()
-        manager.path = '.'  # Point for test json
         self.manager = manager
 
-    def get_both(self, x_y=True):
+    def get_both(self, x_y=True, full=False):
         pos_dict = self.manager.get_position()
         if pos_dict is False:
             return False
         else:
             pos_dict = list(pos_dict.items())
+
+        if full is True:
+            return dict(pos_dict)
 
         if x_y is True:  # return x, y
             pos_dict = pos_dict[:2]
@@ -75,19 +78,36 @@ class MoveMouse:
         return x, y
 
     def move(self, x, y):
-        a = self.get_both()
-        x, y = None, None
-
+        a = self.get_both(full=True)
         if a is False:
             return False
-        else:
-            x, y = a[0], a[1]
+        json_info = list(a.values())
+        x, y = json_info[0], json_info[1]
+        w, h = json_info[2], json_info[3]
+        nome = json_info[4]
 
-        try:
-            pyautogui.moveTo(x, y)
-        except pyautogui.FailSafeException:
-            print('saída de segurança acionada.')
-            exit()
+
+        pyautogui.moveTo(x=x+15)
+        pyautogui.hotkey('esc')
+        pyautogui.hotkey('f3')
+        pyautogui.typewrite(' '.join(nome.split(' ')[:2]))
+        scrollada = 0
+        if y > h:
+            a = y + (-y*2)
+        else:
+            a = y
+        scrollada = int(a/100)
+
+#        notification.notify(title=f'x={x}, y={y}', timeout=3)
+        sleep(4)
+        pyautogui.hotkey('esc')
+
+#        pyautogui.scroll(scrollada)
+#        pyautogui.moveTo(y=int(y-(h/2))-100)
+#        sleep(4)
+#        pyautogui.scroll(20)
+#        pyautogui.moveTo(y=y-(y*2)/100)
+#        pyautogui.click()
 
 
 class Flow:
