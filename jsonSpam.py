@@ -1,14 +1,18 @@
 import os
 from time import sleep
 import json
+from random import randint
 
-x = {'x': 123, 'y': 281, 'width': 1359, 'height': 1011}
+def create_x():
+    x = {'x': 123, 'y': randint(-5000, 5000), 'width': 1359, 'height': 1011}
+    return x
 
-writer = json.dumps(x, indent=4)
+path = f'{os.path.expanduser("~")}/Downloads/position.json'
 
 while True:
-    if os.path.exists('position.json') is False:
-        with open('position.json', 'w') as file:
+    writer = json.dumps(create_x(), indent=4)
+    if os.path.exists(path) is False:
+        with open(path, 'w') as file:
             file.write(writer)
             print('json criado')
         try:
