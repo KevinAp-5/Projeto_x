@@ -86,6 +86,8 @@ class MoveMouse:
         w, h = json_info[2], json_info[3]
         nome = json_info[4]
 
+        while 'bet' not in WindowManager().window_title():
+            sleep(0.1)
 
         pyautogui.moveTo(x=x+15)
         pyautogui.hotkey('esc')
@@ -146,6 +148,8 @@ class WindowManager:
 
         if buf.value:
             return str(buf.value)
+        else:
+            return ''
 
 
 if __name__ == '__main__':
