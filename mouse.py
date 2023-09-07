@@ -46,7 +46,7 @@ class FileManager:
         if self.exist_position() is True:
             my_position = self.get_json()
             self.delete_position()
-            print(my_position)
+            print(my_position.get('nome'))
             return my_position
         else:
             return False
@@ -85,14 +85,21 @@ class MoveMouse:
         w, h = json_info[2], json_info[3]
         nome = json_info[4]
 
-        while 'bet' not in WindowManager().window_title():
-            print('aguardando voltar para janela da bet...', end='\r', flush=True)
-            sleep(0.1)
+        if 'win' in platform:
+            while 'bet' not in WindowManager().window_title():
+                print('aguardando voltar para janela da bet...', end='\r', flush=True)  
+                sleep(0.1)
+        print()
 
         pyautogui.moveTo(x=x+15)
         pyautogui.hotkey('esc')
         pyautogui.hotkey('f3')
-        pyautogui.typewrite(' '.join(nome.split(' ')[:2]))
+        partida = ' '.join(nome.split(' ')[:2])
+        print(partida, '\n')
+        partida = ' '.join(partida.split('GOL')[0])
+        print(partida)
+
+        pyautogui.typewrite(partida)
         scrollada = 0
         if y > h:
             a = y + (-y*2)
