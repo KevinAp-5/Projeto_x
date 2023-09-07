@@ -91,12 +91,20 @@ class MoveMouse:
                 sleep(0.1)
         print()
 
-        pyautogui.moveTo(x=x+15)
+        pyautogui.moveTo(135)
+        pyautogui.moveTo(y=650)
         pyautogui.hotkey('esc')
         pyautogui.hotkey('f3')
         partida = ' '.join(nome.split(' ')[:2])
         print(partida, '\n')
-        partida = ' '.join(partida.split('GOL')[0])
+
+        a = ' '.join(partida.split('GOL'))
+        b = a.split(' ')[0]
+        if len(b) <= 5:
+            partida = a
+        else:
+            partida = b
+
         print(partida)
 
         pyautogui.typewrite(partida)
