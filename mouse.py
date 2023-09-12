@@ -9,6 +9,12 @@ if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
 #    from pywinauto import Desktop, Aplication
 
+def write(word):
+    for c in word:
+        c = '%04x' % ord(c)
+        pyautogui.keyDown('optionleft')
+        pyautogui.typewrite(c)
+        pyautogui.keyUp('optionleft')
 
 class FileManager:
     def __init__(self):
@@ -107,7 +113,7 @@ class MoveMouse:
 
         print(partida)
 
-        pyautogui.typewrite(partida)
+        write(partida)
         scrollada = 0
         if y > h:
             a = y + (-y*2)
@@ -118,12 +124,6 @@ class MoveMouse:
         sleep(4)
         pyautogui.hotkey('esc')
 
-#        pyautogui.scroll(scrollada)
-#        pyautogui.moveTo(y=int(y-(h/2))-100)
-#        sleep(4)
-#        pyautogui.scroll(20)
-#        pyautogui.moveTo(y=y-(y*2)/100)
-#        pyautogui.click()
 
 
 class Flow:
