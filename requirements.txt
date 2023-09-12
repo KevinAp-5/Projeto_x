@@ -1,11 +1,10 @@
-# --upgrade setuptools wheel
+setuptools
 wheel
 requests
-setuptools
 pyproject-toml
 pillow
 pyautogui
 pypiwin32
 pywinauto
-pyautogui
-pywin32==225
+pywin32==2.5.5
+playsound==1.2.2
