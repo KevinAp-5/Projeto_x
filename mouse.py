@@ -126,6 +126,19 @@ def banner(title):
     return f'{"="*size}\n{title.title().center(size)}\n{"="*size}'
 
 
+def nice_line():
+    line = '-' * int(terminal_size()*0.60)
+    white_space = ' ' * int((terminal_size()/2) - (len(line)/2))
+    line = f'{white_space}{line}{white_space}\n'
+    sleep_time = 0.02
+
+    for item in line:
+        print(item, end='', flush=True)
+        try:
+            sleep(sleep_time)
+        except KeyboardInterrupt:
+            sleep_time = 0
+
 
 class Flow:
     def __init__(self):
