@@ -160,8 +160,11 @@ class Flow:
                 x, y = i[0], i[1]
                 break
             else:
-                print('aguardando arquivo\t', end='\r', flush=True)
-                sleep(0.1)
+                print('aguardando arquivo'.center(terminal_size()), end='\r', flush=True)
+                try:
+                    sleep(0.1)
+                except KeyboardInterrupt:
+                    exit()
 
         while True:
             mouse.move(x, y)
