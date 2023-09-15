@@ -117,8 +117,10 @@ class MoveMouse:
         self.managerwrite(partida)
 
 
-        sleep(4)
-        pyautogui.hotkey('esc')
+def terminal_size():
+    return get_terminal_size()[0]
+
+
 
 
 
