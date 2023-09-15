@@ -114,14 +114,8 @@ class MoveMouse:
             partida = b
 
         print(partida)
+        self.managerwrite(partida)
 
-        write(partida)
-        scrollada = 0
-        if y > h:
-            a = y + (-y*2)
-        else:
-            a = y
-        scrollada = int(a/100)
 
         sleep(4)
         pyautogui.hotkey('esc')
@@ -169,5 +163,6 @@ class WindowManager:
 
 
 if __name__ == '__main__':
-    x = Flow().main()
+    x = Flow()
+    x.main()
     #x.move()
