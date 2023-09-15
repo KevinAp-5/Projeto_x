@@ -142,7 +142,12 @@ def nice_line():
 
 class Flow:
     def __init__(self):
-        ...
+        print(banner('Goal Scanner'))
+        nice_line()
+        filer = FileManager()
+        filer.exist_position()
+        filer.delete_position()
+
 
     def main(self):
         mouse = MoveMouse()
