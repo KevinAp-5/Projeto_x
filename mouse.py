@@ -90,7 +90,12 @@ class MoveMouse:
 
         if 'win' in platform:
             while 'bet' not in WindowManager().window_title():
-                print('aguardando voltar para janela da bet...', end='\r', flush=True)  
+                text = 'aguardando voltar para janela da bet'
+                for x in range(3):
+                    print(text+'.'*x, end='\r', flush=True)
+                    sleep(0.5)
+                    if 'bet' in WindowManager.window_title():
+                        break
                 sleep(0.1)
         print()
 
