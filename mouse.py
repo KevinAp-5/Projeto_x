@@ -57,6 +57,10 @@ class MoveMouse:
         manager = FileManager()
         self.manager = manager
 
+    def write(text):
+        copy(text)
+        pyautogui.hotkey('ctrl', 'v')
+
     def get_both(self, x_y=True, full=False):
         pos_dict = self.manager.get_position()
         if pos_dict is False:
