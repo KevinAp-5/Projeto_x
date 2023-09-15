@@ -1,20 +1,16 @@
 from json import load
 import os
+from os import get_terminal_size
 import pyautogui
 from sys import platform
 from glob import glob
 from time import sleep
+from pyperclip import copy
 
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
 #    from pywinauto import Desktop, Aplication
 
-def write(word):
-    for c in word:
-        c = '%04x' % ord(c)
-        pyautogui.keyDown('optionleft')
-        pyautogui.typewrite(c)
-        pyautogui.keyUp('optionleft')
 
 class FileManager:
     def __init__(self):
