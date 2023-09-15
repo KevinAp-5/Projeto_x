@@ -29,7 +29,7 @@ class FileManager:
         position = dict()
         with open(f'{self.path}/position.json', 'r+') as position_json:
             position = load(position_json)
-            print('Posição capturada.')
+            print('Gol encontrado')
             self.can_delete = True
             position_json.close()
         return position
@@ -38,17 +38,14 @@ class FileManager:
         if self.can_delete is True:
             for file in glob(f'{self.path}/position*.json'):
                 os.remove(file)
-            print('Arquivo removido.')
             return True
         else:
-            print("Não é possível remover arquivo.")
             return False
 
     def get_position(self):
         if self.exist_position() is True:
             my_position = self.get_json()
             self.delete_position()
-            print(my_position.get('nome'))
             return my_position
         else:
             return False
