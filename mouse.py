@@ -121,6 +121,9 @@ def terminal_size():
     return get_terminal_size()[0]
 
 
+def banner(title):
+    size = terminal_size()
+    return f'{"="*size}\n{title.title().center(size)}\n{"="*size}'
 
 
 
