@@ -12,8 +12,15 @@ if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
 #    from pywinauto import Desktop, Aplication
 
+
+def get_argv():
+    conf = [int(float(item.strip())) for item in argv[1:]]
+    return conf[:3]
+
+
 def printer(text):
     print(str(text).center(terminal_size()), end='\r', flush=True)
+
 
 class FileManager:
     def __init__(self):
@@ -137,6 +144,7 @@ class MoveMouse:
         sleep(0.1)
         pyautogui.hotkey('esc')
 
+
 def terminal_size():
     return get_terminal_size()[0]
 
@@ -162,12 +170,11 @@ def nice_line():
 
 class Flow:
     def __init__(self):
-        print(banner('Goal Scanner'))
+        print(banner('Mineirinho Scanner'))
         nice_line()
         filer = FileManager()
         filer.exist_position()
         filer.delete_position()
-
 
     def main(self):
         mouse = MoveMouse()
