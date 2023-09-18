@@ -6,11 +6,14 @@ from sys import platform
 from glob import glob
 from time import sleep
 from pyperclip import copy
+from plyer import notification
 
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
 #    from pywinauto import Desktop, Aplication
 
+def printer(text):
+    print(str(text).center(terminal_size()), end='\r', flush=True)
 
 class FileManager:
     def __init__(self):
@@ -29,7 +32,7 @@ class FileManager:
         position = dict()
         with open(f'{self.path}/position.json', 'r+') as position_json:
             position = load(position_json)
-            print('Gol encontrado')
+            printer('Gol encontrado')
             self.can_delete = True
             position_json.close()
         return position
@@ -57,8 +60,9 @@ class MoveMouse:
         manager = FileManager()
         self.manager = manager
 
-    def write(text):
+    def write(self, text):
         copy(text)
+        sleep(0.1)
         pyautogui.hotkey('ctrl', 'v')
 
     def get_both(self, x_y=True, full=False):
@@ -92,19 +96,19 @@ class MoveMouse:
             while 'bet' not in WindowManager().window_title():
                 text = 'aguardando voltar para janela da bet'
                 for x in range(3):
-                    print(text+'.'*x, end='\r', flush=True)
+                    printer(str(text+'.'*x))
                     sleep(0.5)
                     if 'bet' in WindowManager.window_title():
                         break
                 sleep(0.1)
         print()
 
-        pyautogui.moveTo(135)
-        pyautogui.moveTo(y=650)
+        copy('')
+        pyautogui.moveTo(1107)
+        pyautogui.moveTo(y=575)
         pyautogui.hotkey('esc')
         pyautogui.hotkey('f3')
         partida = ' '.join(nome.split(' ')[:2])
-        print(partida, '\n')
 
         a = ' '.join(partida.split('GOL'))
         b = a.split(' ')[0]
@@ -112,10 +116,20 @@ class MoveMouse:
             partida = a
         else:
             partida = b
-
-        print(partida)
-        self.managerwrite(partida)
-
+#        notification.notify(title=partida, timeout=3)
+        partida = ''.join(partida)
+        printer(partida)
+        print()
+        printer(y)
+        self.write(partida)
+        try:
+            sleep(5)
+        except KeyboardInterrupt:
+            exit()
+        pyautogui.hotkey('f3')
+        pyautogui.hotkey('backspace')
+        sleep(0.1)
+        pyautogui.hotkey('esc')
 
 def terminal_size():
     return get_terminal_size()[0]
@@ -160,7 +174,7 @@ class Flow:
                 x, y = i[0], i[1]
                 break
             else:
-                print('aguardando arquivo'.center(terminal_size()), end='\r', flush=True)
+                printer('aguardando gol')
                 try:
                     sleep(0.1)
                 except KeyboardInterrupt:
