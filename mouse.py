@@ -121,6 +121,7 @@ class MoveMouse:
         printer(partida)
         print()
         printer(y)
+        print()
         self.write(partida)
         try:
             sleep(5)
