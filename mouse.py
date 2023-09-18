@@ -32,7 +32,7 @@ class FileManager:
         position = dict()
         with open(f'{self.path}/position.json', 'r+') as position_json:
             position = load(position_json)
-            printer('Gol encontrado')
+            printer('Procurando')
             self.can_delete = True
             position_json.close()
         return position
@@ -122,7 +122,12 @@ class MoveMouse:
         print()
         printer(y)
         print()
+        print()
         self.write(partida)
+        sleep(0.1)
+        pyautogui.click()
+        sleep(0.009)
+        pyautogui.click()
         try:
             sleep(5)
         except KeyboardInterrupt:
