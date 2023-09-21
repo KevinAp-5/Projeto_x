@@ -2,7 +2,7 @@ from json import load
 import os
 from os import get_terminal_size
 import pyautogui
-from sys import platform
+from sys import platform, argv
 from glob import glob
 from time import sleep
 from pyperclip import copy
@@ -66,6 +66,7 @@ class MoveMouse:
         pyautogui.PAUSE = 0.01
         manager = FileManager()
         self.manager = manager
+        self.counter = 0
 
     def write(self, text):
         copy(text)
@@ -91,9 +92,16 @@ class MoveMouse:
         return x, y
 
     def move(self, x, y):
+        filterr = argv[0]
+        if 'mouse' in filterr:
+            filterr = 2
+        else:
+            filterr = int(argv[0])
+
         a = self.get_both(full=True)
         if a is False:
             return False
+
         json_info = list(a.values())
         x, y = json_info[0], json_info[1]
         w, h = json_info[2], json_info[3]
@@ -115,7 +123,7 @@ class MoveMouse:
         pyautogui.moveTo(y=575)
         pyautogui.hotkey('esc')
         pyautogui.hotkey('f3')
-        partida = ' '.join(nome.split(' ')[:2])
+        partida = ' '.join(nome.split(' ')[:filterr])
 
         a = ' '.join(partida.split('GOL'))
         b = a.split(' ')[0]
@@ -127,7 +135,8 @@ class MoveMouse:
         partida = ''.join(partida)
         printer(partida)
         print()
-        printer(y)
+        self.counter += 1
+        printer(f"Gols encontrados: {self.counter}")
         print()
         print()
         self.write(partida)
