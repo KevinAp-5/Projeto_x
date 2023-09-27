@@ -1,0 +1,11 @@
+# --upgrade setuptools wheel
+wheel
+requests
+setuptools
+pyproject-toml
+pillow
+pyautogui
+pypiwin32
+pywinauto
+pyautogui
+pywin32==225
