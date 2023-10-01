@@ -12,7 +12,6 @@ function timer() {
         let nome_time = gol_eye[0];
         for (let i = 0; i <3; i++) {
             nome_time = nome_time.parentElement;
-            console.log(nome_time.textContent)
         }
         const nome = nome_time.textContent;
         if (times_gol) {
@@ -26,7 +25,6 @@ function timer() {
                 'height': window.innerHeight,
                 'nome': nome
             });
-            console.log(jsonString)
 
             const blob = new Blob([jsonString], { type: 'application/json' });
             const a = document.createElement('a');
