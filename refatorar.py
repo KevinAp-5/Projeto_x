@@ -183,6 +183,7 @@ class MoveMouse:
     def main(self, x=1270, y=570):
         x = 1168
         y = 601
+
         if WINDOWS is True:
             WindowManager.bet_loop()
 
@@ -229,7 +230,7 @@ class MoveMouse:
 
 
 class WindowManager:
-    def __init__(self):
+    def window_title(self):
         hWnd = windll.user32.GetForegroundWindow()
         length = windll.user32.GetWindowTextLengthW(hWnd)
         buf = create_unicode_buffer(length + 1)
