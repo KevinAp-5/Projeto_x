@@ -127,7 +127,6 @@ class MoveMouse:
         pyautogui.PAUSE = 0.1
         manager = FileManager()
         self.manager = manager
-        self.counter = 0
         self.seconds = 0
 
     def write(self, text):
@@ -188,8 +187,7 @@ class MoveMouse:
             WindowManager.bet_loop()
 
         nome_time = self.partida_name(self.gol_info_loop())
-        self.counter += 1
-        Printer(f'{self.counter} - {nome_time} - {self.seconds:.2f}s')
+        Printer(f'{nome_time} - {self.seconds:.2f}s')
         print()
         print()
 
