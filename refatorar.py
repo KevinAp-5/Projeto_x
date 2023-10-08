@@ -159,7 +159,6 @@ class MoveMouse:
         return True
 
     def click(self):
-        pyautogui.click()
         sleep(0.1)
         pyautogui.click()
 
