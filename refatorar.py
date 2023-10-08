@@ -203,11 +203,6 @@ class MoveMouse:
             print('False')
             sleep(1.5)
         self.click()
-#        if can_click is not True :
-#            sleep(1)
-#        else:
-#            sleep(1)
-#            self.click()
         self.clean_search()
 
     def gol_info_loop(self):
