@@ -6,7 +6,7 @@ from sys import platform, argv
 from glob import glob
 from time import sleep
 from pyperclip import copy
-
+from playsound import playsound
 
 WINDOWS = False
 if 'win' in platform:
