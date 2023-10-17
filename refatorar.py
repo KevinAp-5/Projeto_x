@@ -106,8 +106,9 @@ class FileManager:
         position = dict()
         if self.file_exists() is False:
             return False
+        to_open = f'{self.path}/position.json'
 
-        with open(f'{self.path}/position.json', 'r+') as position_json:
+        with open(to_open, 'r+', encoding='utf-8') as position_json:
             position = load(position_json)
             self.can_delete = True
             position_json.close()
