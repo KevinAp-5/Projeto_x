@@ -191,6 +191,7 @@ class MoveMouse:
         print()
         print()
 
+        playsound('sound.mp3')
         opened = self.open_search()
         sleep(0.1)
         self.move_mouse(x, y)
