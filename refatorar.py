@@ -5,13 +5,17 @@ import pyautogui
 from sys import platform, argv
 from glob import glob
 from time import sleep
-from pyperclip import copy
+import pyperclip
 from playsound import playsound
 
 WINDOWS = False
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
     WINDOWS = True
+
+
+def copy(text):
+    pyperclip.copy(text)
 
 
 def terminal_size():
