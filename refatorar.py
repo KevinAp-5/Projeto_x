@@ -125,7 +125,7 @@ class FileManager:
 
 class MoveMouse:
     def __init__(self):
-        pyautogui.PAUSE = 0.1
+        pyautogui.PAUSE = 0.01
         manager = FileManager()
         self.manager = manager
         self.seconds = 0
