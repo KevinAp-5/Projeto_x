@@ -123,6 +123,15 @@ class FileManager:
         return list(json_info.values())[4]
 
 
+def esport_fix(name_list):
+    new_name = list()
+    for x in name_list:
+        x = x.replace('Esports', '')
+        if x != '':
+            new_name.append(x)
+    return fix_sub(new_name)
+
+
 def bad_split(times):
     nome = times[-1]
     last_two = times[-2:]
