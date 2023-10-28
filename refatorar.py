@@ -167,8 +167,6 @@ def bad_split(times):
 def team_goal(raw_info):
     times = raw_info.split('GOL')
     if times[-1] == '':  # BAD SPLIT
-        print()
-        print('bad')
         times.pop(-1)
         times = ''.join(times).split(' ')
         times = esport_fix(times)
@@ -176,9 +174,6 @@ def team_goal(raw_info):
     elif len(times) == 2:  # GOOD SPLIT
         times = esport_fix(times)
         times = times[0].strip()
-    else:
-        print('\nError!!')
-        exit()
 
     return times
 
