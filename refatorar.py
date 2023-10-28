@@ -199,18 +199,10 @@ class MoveMouse:
     def clean_clipboard(self):
         copy('')
 
-    def partida_name(self, gol_info, length=2):
-        nome = ' '.join(' '.join(gol_info.split(' ')[:length]).split('GOL'))
-        small_name = nome.split(' ')[0]
-
-        if len(small_name) > 5:
-            nome = small_name
-        else:
-            nome = nome.split(' ')[:2]
-        nome = ''.join(nome)
-
+    def partida_name(self, gol_info):
+        nome = team_goal(gol_info)
         self.manager.delete_position()
-        return nome
+        return nome.lower()
 
     def open_search(self):
         self.clean_clipboard()
