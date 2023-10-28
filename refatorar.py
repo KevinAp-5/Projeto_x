@@ -1,3 +1,4 @@
+from clipboard import copy
 from json import load
 import os
 from os import get_terminal_size
