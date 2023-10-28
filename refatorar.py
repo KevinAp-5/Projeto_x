@@ -164,12 +164,7 @@ class MoveMouse:
         pyautogui.click()
 
     def clean_search(self):
-        try:
-            sleep(1.5)
-        except KeyboardInterrupt:
-            print()
-            Keyboard().treat_input()
-
+        sleep(1.5)
         pyautogui.hotkey('f3')
         pyautogui.hotkey('backspace')
         sleep(0.1)
