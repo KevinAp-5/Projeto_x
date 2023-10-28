@@ -123,6 +123,21 @@ class FileManager:
         return list(json_info.values())[4]
 
 
+def bad_split(times):
+    nome = times[-1]
+    last_two = times[-2:]
+    if len(nome) <= 2 or '(' in nome:
+        nome = last_two
+    elif len(nome) >= 3:
+        if len([x for x in nome if x.upper()]) <= 1 or len(times[-2]) == 2:
+            nome = last_two
+
+    if isinstance(nome, list):
+        nome = ' '.join(nome)
+
+    return nome
+
+
 def team_goal(raw_info):
     times = raw_info.split('GOL')
     if times[-1] == '':  # BAD SPLIT
