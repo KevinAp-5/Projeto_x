@@ -101,9 +101,9 @@ class FileManager:
 
     def file_exists(self):
         return os.path.exists(f'{self.path}/position.json')
-
     def get_json(self):
         position = dict()
+
         if self.file_exists() is False:
             return False
         to_open = f'{self.path}/position.json'
@@ -175,8 +175,8 @@ class MoveMouse:
         pyautogui.moveTo(y=y)
 
     def main(self, x=1270, y=570):
-        x = 1168
-        y = 601
+        x = 1270
+        y = 580
 
         if WINDOWS is True:
             WindowManager.bet_loop()
