@@ -19,10 +19,6 @@ function timer() {
             console.log(nome)
             const posicao = times_gol.getBoundingClientRect().toJSON();
             const jsonString = JSON.stringify({
-                'x': posicao.x,
-                'y': posicao.y,
-                'width': window.innerWidth,
-                'height': window.innerHeight,
                 'nome': nome
             });
 
