@@ -123,6 +123,23 @@ class FileManager:
         return list(json_info.values())[4]
 
 
+def fix_sub(lista):
+    new_list = list()
+
+    def remove_digit(name):
+        new_name = str()
+        for letter in name:
+            if letter.isdigit() is False:
+                new_name += letter
+        return new_name
+
+    for name in lista:
+        if 'sub' in name.lower():
+            name = remove_digit(name.replace('Sub-', ''))
+        new_list.append(name)
+    return new_list
+
+
 def esport_fix(name_list):
     new_name = list()
     for x in name_list:
