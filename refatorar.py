@@ -202,9 +202,12 @@ class MoveMouse:
     def gol_info_loop(self):
         counter = 0
         while True:
+            alert = ' - Espera alta, verifique o site ou programa'
             gol_info = self.manager.get_json()
             if gol_info is False:
-                Printer(f'aguardando gol {counter:.2f}s')
+                if counter <= 200:
+                    alert = ''
+                Printer(f'aguardando gol {counter:.2f}s {alert}')
                 try:
                     sleep(0.2)
                 except KeyboardInterrupt:
