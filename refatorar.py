@@ -213,6 +213,7 @@ class MoveMouse:
                 except KeyboardInterrupt:
                     print()
                     Keyboard().treat_input()
+                    FileManager().delete_position()
                 counter += 0.2
             else:
                 Printer.clean()
