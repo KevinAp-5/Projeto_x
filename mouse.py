@@ -120,7 +120,7 @@ class FileManager:
         return True
 
     def get_nome(self, json_info):
-        return list(json_info.values())[4]
+        return list(json_info.values())[0]
 
 
 def fix_sub(lista):
