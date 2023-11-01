@@ -160,6 +160,10 @@ def remove_nick(lista):
 def bad_split(times):
     nome = times[-1]
     last_two = times[-2:]
+
+    if nome.lower() == 'utd' or nome.lower() == 'City':
+        return last_two
+
     if len(nome) <= 2 or '(' in nome:
         nome = last_two
     elif len(nome) >= 3:
