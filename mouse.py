@@ -149,6 +149,14 @@ def esport_fix(name_list):
     return fix_sub(new_name)
 
 
+def remove_nick(lista):
+    for x in lista:
+        if '(' in x:
+            return False
+        else:
+            return True
+
+
 def bad_split(times):
     nome = times[-1]
     last_two = times[-2:]
