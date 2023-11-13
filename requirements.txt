@@ -4,7 +4,4 @@ requests
 pyproject-toml
 pillow
 pyautogui
-pypiwin32
-pywinauto
-pywin32==2.5.5
 playsound==1.2.2
