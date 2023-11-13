@@ -5,3 +5,4 @@ pyproject-toml
 pillow
 pyautogui
 playsound==1.2.2
+pyperclip
