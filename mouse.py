@@ -163,6 +163,18 @@ def bad_split(times):
     nome = times[-1]
     last_two = times[-2:]
 
+    def big_name(nome):
+        new_nome = list()
+        for counter, letter in enumerate(nome):
+            if counter == 0:
+                if letter.isupper() is True:
+                    new_nome.append(letter)
+            elif letter.islower():
+                new_nome.append(letter)
+            else:
+                break
+        return ''.join(new_nome)
+
     if nome.lower() == 'utd' or nome.lower() == 'City':
         return last_two
 
