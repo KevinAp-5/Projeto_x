@@ -203,6 +203,8 @@ def bad_split(times):
 
 def team_goal(raw_info):
     times = raw_info.split('GOL')
+    return times[0]
+
     if times[-1] == '':  # BAD SPLIT
         times.pop(-1)
         times = ''.join(times).split(' ')

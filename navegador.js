@@ -4,16 +4,9 @@ function timer() {
     const gol_eye = document.getElementsByClassName('ovm-GoalEventAlert_Text');
     if (gol_eye.length > 0 && !arquivoBaixado) {
         clearInterval(bombs); // Pare de verificar enquanto processa o download
-        let times_gol = gol_eye[0];  // Get the match div
-        for (let i = 0; i < 3; i++) {
-            times_gol = times_gol.parentElement;
-        }
+        let times_gol = gol_eye[0].parentElement.parentElement;  // Get the match div
 
-        let nome_time = gol_eye[0];
-        for (let i = 0; i <3; i++) {
-            nome_time = nome_time.parentElement;
-        }
-        const nome = nome_time.textContent;
+        const nome = times_gol.textContent;  // Pega o nome do time que fez gol
         if (times_gol) {
             console.log('Gol encontrado.');
             console.log(nome)
