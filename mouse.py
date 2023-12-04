@@ -184,6 +184,17 @@ def bad_split(times):
         if len([x for x in nome if x.upper()]) <= 1:
             nome = last_two
 
+        if nome.lower() == 'reservas':
+            if last_two[0] == '-':
+                nome = times[-3]
+        try:
+            if len(times[-2]) == 2:  # Test
+                nome = last_two
+        except IndexError:
+            if nome.isupper():
+                return nome[-3:]
+            nome = big_name(nome)
+
     if isinstance(nome, list):
         nome = ' '.join(nome)
 
