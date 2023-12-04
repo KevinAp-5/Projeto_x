@@ -8,6 +8,7 @@ from glob import glob
 from time import sleep
 from playsound import playsound
 
+
 WINDOWS = False
 if 'win' in platform:
     from ctypes import wintypes, windll, create_unicode_buffer
@@ -101,6 +102,7 @@ class FileManager:
 
     def file_exists(self):
         return os.path.exists(f'{self.path}/position.json')
+
     def get_json(self):
         position = dict()
 
