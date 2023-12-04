@@ -202,19 +202,7 @@ def bad_split(times):
 
 
 def team_goal(raw_info):
-    times = raw_info.split('GOL')
-    return times[0]
-
-    if times[-1] == '':  # BAD SPLIT
-        times.pop(-1)
-        times = ''.join(times).split(' ')
-        times = esport_fix(times)
-        times = bad_split(times)
-    elif len(times) == 2:  # GOOD SPLIT
-        times = esport_fix(times)
-        times = times[0].strip()
-
-    return times
+    return raw_info.split('GOL')[0]
 
 
 class MoveMouse:
