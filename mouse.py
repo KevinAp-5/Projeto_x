@@ -181,7 +181,7 @@ def bad_split(times):
     if len(nome) <= 2 or '(' in nome:
         nome = last_two
     elif len(nome) >= 3:
-        if len([x for x in nome if x.upper()]) <= 1 or len(times[-2]) == 2:
+        if len([x for x in nome if x.upper()]) <= 1:
             nome = last_two
 
     if isinstance(nome, list):
