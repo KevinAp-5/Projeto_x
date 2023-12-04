@@ -264,8 +264,8 @@ class MoveMouse:
         x = 1270
         y = 580
 
-        if WINDOWS is True:
-            WindowManager.bet_loop()
+#        if WINDOWS is True:
+#            WindowManager.bet_loop()
 
         nome_time = self.partida_name(self.gol_info_loop())
         Printer(f'{nome_time} - {self.seconds:.2f}s')
