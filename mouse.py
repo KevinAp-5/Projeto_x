@@ -136,6 +136,10 @@ def team_goal(raw_info):
     return raw_info.split('GOL')[0]
 
 
+def playsd():
+    playsound('sound.mp3')
+
+
 class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.01
@@ -191,7 +195,7 @@ class MoveMouse:
         print()
         print()
 
-        playsound('sound.mp3')
+        threading.Thread(target=playsd).start()
         opened = self.open_search()
         sleep(0.1)
         self.move_mouse(x, y)
