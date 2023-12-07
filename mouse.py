@@ -200,11 +200,6 @@ class MoveMouse:
         sleep(0.1)
         self.move_mouse(x, y)
         can_click = self.write(nome_time)
-        if opened is True and can_click is True:
-            sleep(1)
-        else:
-            print('False')
-            sleep(1.5)
         self.click()
         self.clean_search()
 
