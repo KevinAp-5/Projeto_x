@@ -8,6 +8,13 @@ from glob import glob
 from time import sleep
 from playsound import playsound
 
+try:
+    import threading
+except ImportError:
+    os.system("pip install thread")
+    sleep(1)
+    import threading
+
 
 WINDOWS = False
 if 'win' in platform:
