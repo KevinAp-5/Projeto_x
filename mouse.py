@@ -242,10 +242,7 @@ class WindowManager:
     def check_tab_name(self):
         tab_name = WindowManager().window_title()
         x = tab_name.split(' ')[0].lower()
-        if 'bet' in x:
-            return True
-        else:
-            return False
+        return "bet" in x
 
     def bet_loop(self):
         while True:
@@ -262,7 +259,7 @@ class WindowManager:
 
 class Main:
     def __init__(self):
-        print(banner('Mineirinho Scanner'))
+        print(banner("EasyGol"))
         nice_line()
 
     def run(self):
@@ -279,3 +276,4 @@ class Main:
 
 if __name__ == '__main__':
     Main().run()
+
