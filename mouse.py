@@ -169,7 +169,7 @@ class MoveMouse:
         return True
 
     def click(self):
-        sleep(0.35)  ######### 0.3s, mudar só o numero entre parenteses ####################3
+        sleep(0.35)
         pyautogui.click()
 
     def clean_search(self):
