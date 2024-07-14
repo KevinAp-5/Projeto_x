@@ -50,7 +50,7 @@ def nice_line():
             sleep_time = 0
 
 
-class Get_input():
+class GetInput():
     def __init__(self):
         self.text = 'Você quer continuar? [S/n]\n'
 
@@ -72,7 +72,7 @@ class Get_input():
 
 class Keyboard():
     def __init__(self):
-        self.user_input = Get_input()
+        self.user_input = GetInput()
 
     def treat_input(self):
         while True:
@@ -86,17 +86,17 @@ class Keyboard():
             else:
                 Printer('Resposta inválida! use [S/N]\n')
                 self.reset()
-                continue
         self.reset()
 
     def reset(self):
-        self.user_input = Get_input()
+        self.user_input = GetInput()
 
 
 class Printer:
     def __init__(self, text):
         print(str(text).center(terminal_size()), end='\r', flush=True)
 
+    @staticmethod
     def clean():
         Printer(' '*terminal_size())
 
@@ -169,7 +169,7 @@ class MoveMouse:
         return True
 
     def click(self):
-        sleep(0.35)
+        sleep(0.35)  ######### 0.3s, mudar só o numero entre parenteses
         pyautogui.click()
 
     def clean_search(self):
@@ -196,10 +196,12 @@ class MoveMouse:
         print()
 
         threading.Thread(target=playsd).start()
-        opened = self.open_search()
+        self.open_search()
         sleep(0.1)
+      
         self.move_mouse(x, y)
-        can_click = self.write(nome_time)
+        self.write(nome_time)
+      
         self.click()
         self.clean_search()
 
@@ -242,7 +244,10 @@ class WindowManager:
     def check_tab_name(self):
         tab_name = WindowManager().window_title()
         x = tab_name.split(' ')[0].lower()
-        return "bet" in x
+        if 'bet' in x:
+            return True
+        else:
+            return False
 
     def bet_loop(self):
         while True:
@@ -259,7 +264,7 @@ class WindowManager:
 
 class Main:
     def __init__(self):
-        print(banner("EasyGol"))
+        print(banner('Mineirinho Scanner'))
         nice_line()
 
     def run(self):
@@ -276,4 +281,3 @@ class Main:
 
 if __name__ == '__main__':
     Main().run()
-
