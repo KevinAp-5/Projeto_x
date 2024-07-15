@@ -6,4 +6,6 @@ pillow
 pyautogui
 playsound==1.2.2
 pyperclip
-threading
+thread
+PyGObject
+plyer
