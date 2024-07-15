@@ -18,7 +18,7 @@ function timer() {
             const blob = new Blob([jsonString], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            console.log('Enviando informação para o Python');
+            console.log('Enviando informação');
             a.download = 'position.json';
             a.click();
             
