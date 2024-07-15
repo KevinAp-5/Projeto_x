@@ -1,4 +1,4 @@
-from clipboard import copy
+from source.clipboard import copy
 from json import load
 import os
 from os import get_terminal_size
@@ -40,7 +40,7 @@ def nice_line():
     line = '-' * int(terminal_size()*0.60)
     white_space = ' ' * int((terminal_size()/2) - (len(line)/2))
     line = f'{white_space}{line}{white_space}\n'
-    sleep_time = 0.02
+    sleep_time = 0.01
 
     for item in line:
         print(item, end='', flush=True)
@@ -106,6 +106,9 @@ class FileManager:
         self.home = os.path.expanduser('~')
         self.path = self.home + '/Downloads'
         self.can_delete = False
+        self.doubleName = False
+        self.nomeReserva = ''
+        self.name3 = False
 
     def file_exists(self):
         return os.path.exists(f'{self.path}/position.json')
@@ -129,12 +132,34 @@ class FileManager:
         return True
 
     def get_nome(self, json_info):
-        return list(json_info.values())[0]
+        raw_names = [
+            [item for item in x.replace("GOL", "").split("\n") if item != ""]
+            for x in json_info.values()
+        ]
 
+        nome1 = raw_names[0][0]
+        nome2 = next((x for x in raw_names[1] if x != nome1))
 
-def team_goal(raw_info):
-    return raw_info.split('GOL')[0]
+        return self.escolhe_nome([nome1, nome2])
 
+    def escolhe_nome(self, lista_nome):
+        nome1, nome2 = lista_nome[0], lista_nome[1]
+        if len(nome1) == 2:
+            self.doubleName = True
+            self.nomeReserva = nome1
+            return nome2
+
+        self.doubleName = False
+        self.nomeReserva = ''
+
+        if len(nome1) == 3:
+            self.name3 = True
+        else:
+            self.name3 = False
+        return nome1
+
+def teamName(raw_info):
+    return raw_info.split('\n')
 
 def playsd():
     playsound('sound.mp3')
@@ -156,8 +181,7 @@ class MoveMouse:
     def clean_clipboard(self):
         copy('')
 
-    def partida_name(self, gol_info):
-        nome = team_goal(gol_info)
+    def partida_name(self, nome):
         self.manager.delete_position()
         return nome.lower()
 
@@ -183,26 +207,32 @@ class MoveMouse:
         pyautogui.moveTo(x)
         pyautogui.moveTo(y=y)
 
-    def main(self, x=1270, y=570):
-        x = 1270
-        y = 580
+    def main(self, x=1270, y=580):
 
 #        if WINDOWS is True:
 #            WindowManager.bet_loop()
 
         nome_time = self.partida_name(self.gol_info_loop())
-        Printer(f'{nome_time} - {self.seconds:.2f}s')
+
+        if self.manager.doubleName is True:
+            nome_time_show = self.nomeReserva
+
+        nome_time_show = nome_time
+        Printer(f'{nome_time_show} - {self.seconds:.2f}s')
         print()
         print()
 
         threading.Thread(target=playsd).start()
         self.open_search()
         sleep(0.1)
-      
+
         self.move_mouse(x, y)
         self.write(nome_time)
       
         self.click()
+        if self.manager.name3 is True:
+            self.click()
+
         self.clean_search()
 
     def gol_info_loop(self):
