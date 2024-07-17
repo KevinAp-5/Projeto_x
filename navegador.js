@@ -5,20 +5,23 @@ function timer() {
     if (gol_eye.length > 0 && !arquivoBaixado) {
         clearInterval(bombs); // Pare de verificar enquanto processa o download
         let times_gol = gol_eye[0].parentElement.parentElement;  // Get the match div
+        let times_go2 = gol_eye[0].parentElement.parentElement.parentElement;
 
-        const nome = times_gol.textContent;  // Pega o nome do time que fez gol
+        const nome = times_gol.innerText;  // Pega o nome do time que fez gol
+        const nome2 = times_go2.innerText;        
         if (times_gol) {
             console.log('Gol encontrado.');
             console.log(nome)
             const posicao = times_gol.getBoundingClientRect().toJSON();
             const jsonString = JSON.stringify({
-                'nome': nome
+                'nome': nome,
+                'nome2': nome2
             });
 
             const blob = new Blob([jsonString], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            console.log('Enviando informação');
+            console.log('Enviando informação para o Python');
             a.download = 'position.json';
             a.click();
             
