@@ -106,7 +106,7 @@ class FileManager:
         self.home = os.path.expanduser('~')
         self.path = self.home + '/Downloads'
         self.can_delete = False
-        self.doubleName = False
+        self.double_name = False
         self.nome_reserva = ''
         self.name3 = False
 
@@ -143,14 +143,13 @@ class FileManager:
         return self.escolhe_nome([nome1, nome2])
 
     def escolhe_nome(self, lista_nome):
-        lista_nome = ['SA', "Perebas team"] ######################################333 delete
         nome1, nome2 = lista_nome[0], lista_nome[1]
         if len(nome1) == 2:
-            self.doubleName = True
+            self.double_name = True
             self.nome_reserva = nome1
             return nome2
 
-        self.doubleName = False
+        self.double_name = False
         self.nome_reserva = ''
 
         if len(nome1) == 3:
@@ -159,7 +158,7 @@ class FileManager:
             self.name3 = False
         return nome1
 
-def teamName(raw_info):
+def team_name(raw_info):
     return raw_info.split('\n')
 
 def playsd():
@@ -209,13 +208,9 @@ class MoveMouse:
         pyautogui.moveTo(y=y)
 
     def main(self, x=1270, y=580):
-
-#        if WINDOWS is True:
-#            WindowManager.bet_loop()
-
         nome_time = self.partida_name(self.gol_info_loop())
 
-        if self.manager.doubleName is True:
+        if self.manager.double_name is True:
             nome_time_show = self.manager.nome_reserva
 
         nome_time_show = nome_time
@@ -258,39 +253,6 @@ class MoveMouse:
                 nome = self.manager.get_nome(gol_info)
                 self.seconds = counter
                 return nome
-
-
-class WindowManager:
-    def window_title(self):
-        hWnd = windll.user32.GetForegroundWindow()
-        length = windll.user32.GetWindowTextLengthW(hWnd)
-        buf = create_unicode_buffer(length + 1)
-        windll.user32.GetWindowTextW(hWnd, buf, length + 1)
-
-        if buf.value:
-            return str(buf.value)
-        else:
-            return ''
-
-    def check_tab_name(self):
-        tab_name = WindowManager().window_title()
-        x = tab_name.split(' ')[0].lower()
-        if 'bet' in x:
-            return True
-        else:
-            return False
-
-    def bet_loop(self):
-        while True:
-            if self.check_tab_name() is False:
-                print('aguardando voltar para bet', '\r', flush=True)
-            else:
-                break
-            try:
-                sleep(0.2)
-            except KeyboardInterrupt:
-                print()
-                Keyboard().treat_input()
 
 
 class Main:
