@@ -1,4 +1,4 @@
-from source.clipboard import copy
+from clipboard import copy
 from json import load
 import os
 from os import get_terminal_size
@@ -107,7 +107,7 @@ class FileManager:
         self.path = self.home + '/Downloads'
         self.can_delete = False
         self.doubleName = False
-        self.nomeReserva = ''
+        self.nome_reserva = ''
         self.name3 = False
 
     def file_exists(self):
@@ -143,14 +143,15 @@ class FileManager:
         return self.escolhe_nome([nome1, nome2])
 
     def escolhe_nome(self, lista_nome):
+        lista_nome = ['SA', "Perebas team"] ######################################333 delete
         nome1, nome2 = lista_nome[0], lista_nome[1]
         if len(nome1) == 2:
             self.doubleName = True
-            self.nomeReserva = nome1
+            self.nome_reserva = nome1
             return nome2
 
         self.doubleName = False
-        self.nomeReserva = ''
+        self.nome_reserva = ''
 
         if len(nome1) == 3:
             self.name3 = True
@@ -215,7 +216,7 @@ class MoveMouse:
         nome_time = self.partida_name(self.gol_info_loop())
 
         if self.manager.doubleName is True:
-            nome_time_show = self.nomeReserva
+            nome_time_show = self.manager.nome_reserva
 
         nome_time_show = nome_time
         Printer(f'{nome_time_show} - {self.seconds:.2f}s')
