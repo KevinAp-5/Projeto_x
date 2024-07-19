@@ -27,4 +27,3 @@ if __name__ == "__main__":
     sleep(1)
     installer = Instalador()
     installer.instalar()
-    print("Dependencias instaladas com sucesso!")
