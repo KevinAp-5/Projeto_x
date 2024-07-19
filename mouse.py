@@ -162,7 +162,7 @@ def team_name(raw_info):
     return raw_info.split('\n')
 
 def playsd():
-    playsound('sound.mp3')
+    playsound('sound.wav')
 
 
 class MoveMouse:
@@ -197,7 +197,7 @@ class MoveMouse:
         pyautogui.click()
 
     def clean_search(self):
-        sleep(1.5)
+        sleep(1.7)
         pyautogui.hotkey('f3')
         pyautogui.hotkey('backspace')
         sleep(0.1)
@@ -217,7 +217,7 @@ class MoveMouse:
         Printer(f'{nome_time_show} - {self.seconds:.2f}s')
         print()
         print()
-
+   
         threading.Thread(target=playsd).start()
         self.open_search()
         sleep(0.1)
@@ -229,7 +229,11 @@ class MoveMouse:
         if self.manager.name3 is True:
             self.click()
 
-        self.clean_search()
+        print()
+        threading.Thread(target=self.clean_search()).start()
+        Keyboard().treat_input()
+        FileManager().delete_position()
+
 
     def gol_info_loop(self):
         counter = 0
@@ -245,7 +249,7 @@ class MoveMouse:
                 except KeyboardInterrupt:
                     print()
                     Keyboard().treat_input()
-                    FileManager().delete_position()
+
                     counter = 0
                 counter += 0.2
             else:
