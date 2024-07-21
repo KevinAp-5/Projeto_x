@@ -194,27 +194,33 @@ class MoveMouse:
     def move_mouse(self, x=1270, y=570):
         pyautogui.moveTo(x=x, y=y)
 
+    def handle_sound(self):
+        if self.sound_manager.enabled:
+            self.sound_thread.start()
+
+    def execute_search(self, nome_time, x=1270, y=580):
+        self.open_search()
+        sleep(0.1)
+        self.move_mouse(x, y)
+        self.write(nome_time)
+        self.click()
+
+    def additional_click_for_name3(self):
+        if self.manager.name3:
+            self.move_mouse(x=1260)
+            sleep(0.2)
+            threading.Thread(target=pyautogui.click).start()
+
     def main(self, x=1270, y=580):
         nome_time = self.partida_name(self.gol_info_loop())
         nome_time_show = self.manager.nome_reserva if self.manager.two_letters else nome_time
 
         print(f'{nome_time_show} - {self.seconds:.2f}s'.center(Utilities.terminal_size()), end='\r', flush=True)
         print('\n')
- 
-        if self.sound_manager.enabled:
-            self.sound_thread.start()
 
-        self.open_search()
-        sleep(0.1)
-
-        self.move_mouse(x, y)
-        self.write(nome_time)
-        self.click()
-
-        if self.manager.name3:
-            self.move_mouse(x=1260)
-            sleep(0.2)
-            threading.Thread(target=pyautogui.click).start()
+        self.handle_sound()
+        self.execute_search(nome_time, x, y)
+        self.additional_click_for_name3()
 
         print()
         threading.Thread(target=self.clean_search).start()
@@ -247,6 +253,7 @@ class MoveMouse:
                 counter = 0
 
             counter += 0.2
+
 
 class Main:
     def __init__(self):
