@@ -1,66 +1,58 @@
-from clipboard import copy
-from json import load
 import os
-from os import get_terminal_size
+import json
 import pyautogui
-from sys import platform, argv
-from glob import glob
+import threading
+from sys import argv, platform
 from time import sleep
+from glob import glob
 from playsound import playsound
-
-try:
-    import threading
-except ImportError:
-    os.system("pip install thread")
-    sleep(1)
-    import threading
+from clipboard import copy
+from os import get_terminal_size
 
 
-WINDOWS = False
-if 'win' in platform:
-    from ctypes import wintypes, windll, create_unicode_buffer
-    WINDOWS = True
+class Utilities:
+    @staticmethod
+    def terminal_size():
+        return int(get_terminal_size()[0])
+
+    @staticmethod
+    def get_argv():
+        return [int(float(item.strip())) for item in argv[1:3]]
+
+    @staticmethod
+    def banner(title):
+        size = Utilities.terminal_size()
+        return f'{"=" * size}\n{title.title().center(size)}\n{"=" * size}'
+
+    @staticmethod
+    def nice_line():
+        line = '-' * int(Utilities.terminal_size() * 0.60)
+        white_space = ' ' * int((Utilities.terminal_size() / 2) - (len(line) / 2))
+        line = f'{white_space}{line}{white_space}\n'
+        sleep_time = 0.01
+
+        for item in line:
+            print(item, end='', flush=True)
+            try:
+                sleep(sleep_time)
+            except KeyboardInterrupt:
+                sleep_time = 0
+
+    @staticmethod
+    def play_sound():
+        playsound('sound.wav')
 
 
-def terminal_size():
-    return int(get_terminal_size()[0])
-
-
-def get_argv():
-    conf = [int(float(item.strip())) for item in argv[1:]]
-    return conf[:3]
-
-
-def banner(title):
-    size = terminal_size()
-    return f'{"="*size}\n{title.title().center(size)}\n{"="*size}'
-
-
-def nice_line():
-    line = '-' * int(terminal_size()*0.60)
-    white_space = ' ' * int((terminal_size()/2) - (len(line)/2))
-    line = f'{white_space}{line}{white_space}\n'
-    sleep_time = 0.01
-
-    for item in line:
-        print(item, end='', flush=True)
-        try:
-            sleep(sleep_time)
-        except KeyboardInterrupt:
-            sleep_time = 0
-
-
-class GetInput():
+class GetInput:
     def __init__(self):
         self.text = 'Você quer continuar? [S/n]\n'
 
     def get_answer(self):
         while True:
             try:
-                Printer(self.text)
-                x = int((terminal_size()/2)-1)
-                self.text = input(' '*x)
-                self.text = self.text.strip().lower()[0]
+                print(self.text.center(Utilities.terminal_size()), end='\r', flush=True)
+                x = int((Utilities.terminal_size() / 2) - 1)
+                self.text = input(' ' * x).strip().lower()[0]
             except KeyboardInterrupt:
                 exit()
             except IndexError:
@@ -70,7 +62,7 @@ class GetInput():
                 return self.text
 
 
-class Keyboard():
+class Keyboard:
     def __init__(self):
         self.user_input = GetInput()
 
@@ -78,13 +70,13 @@ class Keyboard():
         while True:
             resume_pomodoro = self.user_input.get_answer()
             if resume_pomodoro == 's':
-                Printer('Continuando.')
+                print('Continuando.'.center(Utilities.terminal_size()), end='\r', flush=True)
                 break
             elif resume_pomodoro == 'n':
-                Printer('\nAdeus!')
+                print('\nAdeus!'.center(Utilities.terminal_size()), end='\r', flush=True)
                 exit()
             else:
-                Printer('Resposta inválida! use [S/N]\n')
+                print('Resposta inválida! use [S/N]\n'.center(Utilities.terminal_size()), end='\r', flush=True)
                 self.reset()
         self.reset()
 
@@ -93,52 +85,45 @@ class Keyboard():
 
 
 class Printer:
-    def __init__(self, text):
-        print(str(text).center(terminal_size()), end='\r', flush=True)
-
     @staticmethod
     def clean():
-        Printer(' '*terminal_size())
+        print(' ' * Utilities.terminal_size(), end='\r', flush=True)
 
 
 class FileManager:
     def __init__(self):
         self.home = os.path.expanduser('~')
-        self.path = self.home + '/Downloads'
+        self.path = os.path.join(self.home, 'Downloads')
         self.can_delete = False
         self.double_name = False
         self.nome_reserva = ''
         self.name3 = False
 
     def file_exists(self):
-        return os.path.exists(f'{self.path}/position.json')
+        return os.path.exists(os.path.join(self.path, 'position.json'))
 
     def get_json(self):
-        position = dict()
-
-        if self.file_exists() is False:
+        if not self.file_exists():
             return False
-        to_open = f'{self.path}/position.json'
 
-        with open(to_open, 'r+', encoding='utf-8') as position_json:
-            position = load(position_json)
+        with open(os.path.join(self.path, 'position.json'), 'r+', encoding='utf-8') as position_json:
+            position = json.load(position_json)
             self.can_delete = True
-            position_json.close()
         return position
 
     def delete_position(self):
-        for file in glob(f'{self.path}/position*.json'):
+        for file in glob(os.path.join(self.path, 'position*.json')):
             os.remove(file)
         return True
 
     def get_nome(self, json_info):
         raw_names = [
-            [item for item in x.replace("GOL", "").split("\n") if item != ""]
+            [item for item in x.replace("GOL", "").split("\n") if item]
             for x in json_info.values()
         ]
 
         nome1 = raw_names[0][0]
-        nome2 = next((x for x in raw_names[1] if x != nome1))
+        nome2 = next((x for x in raw_names[1] if x != nome1), None)
 
         return self.escolhe_nome([nome1, nome2])
 
@@ -158,25 +143,17 @@ class FileManager:
             self.name3 = False
         return nome1
 
-def team_name(raw_info):
-    return raw_info.split('\n')
-
-def playsd():
-    playsound('sound.wav')
-
 
 class MoveMouse:
     def __init__(self):
         pyautogui.PAUSE = 0.01
-        manager = FileManager()
-        self.manager = manager
+        self.manager = FileManager()
         self.seconds = 0
 
     def write(self, text):
         copy(text)
         sleep(0.2)
         pyautogui.hotkey('ctrl', 'v')
-        return True
 
     def clean_clipboard(self):
         copy('')
@@ -190,10 +167,9 @@ class MoveMouse:
         sleep(0.3)
         pyautogui.hotkey('esc')
         pyautogui.hotkey('f3')
-        return True
 
     def click(self):
-        sleep(0.35)  ######### 0.3s, mudar só o numero entre parenteses
+        sleep(0.35)
         pyautogui.click()
 
     def clean_search(self):
@@ -204,65 +180,61 @@ class MoveMouse:
         pyautogui.hotkey('esc')
 
     def move_mouse(self, x=1270, y=570):
-        pyautogui.moveTo(x)
-        pyautogui.moveTo(y=y)
+        pyautogui.moveTo(x, y=y)
 
     def main(self, x=1270, y=580):
         nome_time = self.partida_name(self.gol_info_loop())
+        nome_time_show = self.manager.nome_reserva if self.manager.double_name else nome_time
 
-        if self.manager.double_name is True:
-            nome_time_show = self.manager.nome_reserva
+        print(f'{nome_time_show} - {self.seconds:.2f}s'.center(Utilities.terminal_size()), end='\r', flush=True)
+        print('\n')
 
-        nome_time_show = nome_time
-        Printer(f'{nome_time_show} - {self.seconds:.2f}s')
-        print()
-        print()
-   
-        threading.Thread(target=playsd).start()
+        threading.Thread(target=Utilities.play_sound).start()
         self.open_search()
         sleep(0.1)
 
         self.move_mouse(x, y)
         self.write(nome_time)
-      
         self.click()
-        if self.manager.name3 is True:
-            self.click()
+        if self.manager.name3:
+            self.move_mouse(x=1260)
+            pyautogui.click()
 
         print()
         threading.Thread(target=self.clean_search()).start()
         Keyboard().treat_input()
         FileManager().delete_position()
 
-
     def gol_info_loop(self):
         counter = 0
         while True:
-            alert = ' - Espera alta, verifique o site ou programa'
             gol_info = self.manager.get_json()
-            if gol_info is False:
-                if counter <= 200:
-                    alert = ''
-                Printer(f'aguardando gol {counter:.2f}s {alert}')
-                try:
-                    sleep(0.2)
-                except KeyboardInterrupt:
-                    print()
-                    Keyboard().treat_input()
 
-                    counter = 0
-                counter += 0.2
-            else:
+            if gol_info:
                 Printer.clean()
                 nome = self.manager.get_nome(gol_info)
                 self.seconds = counter
                 return nome
 
+            alert = '' if counter <= 200 else ' - Espera alta, verifique o site ou programa'
+            print(f'aguardando gol {counter:.2f}s {alert}'.center(
+                Utilities.terminal_size()
+                ), end='\r', flush=True)
+
+            try:
+                sleep(0.2)
+            except KeyboardInterrupt:
+                print()
+                Keyboard().treat_input()
+                counter = 0
+
+            counter += 0.2
+
 
 class Main:
     def __init__(self):
-        print(banner('Mineirinho Scanner'))
-        nice_line()
+        print(Utilities.banner('Mineirinho Scanner'))
+        Utilities.nice_line()
 
     def run(self):
         FileManager().delete_position()
