@@ -9,13 +9,14 @@ from playsound import playsound
 from clipboard import copy
 from os import get_terminal_size
 
+sound_enabled = True  # Variável global para rastrear o estado do som
 
 class Utilities:
     @staticmethod
     def terminal_size():
         try:
             return int(get_terminal_size()[0])
-        except OsError:
+        except OSError:
             print("Rode o programa em outro terminal")
 
     @staticmethod
@@ -43,12 +44,13 @@ class Utilities:
 
     @staticmethod
     def play_sound():
-        playsound('sound.wav')
+        if sound_enabled:
+            playsound('sound.wav')
 
 
 class GetInput:
     def __init__(self):
-        self.text = 'Você quer continuar? [S/n]\n'
+        self.text = 'Você quer continuar? [S/n] - Som[P]\n'
 
     def get_answer(self):
         while True:
@@ -70,16 +72,21 @@ class Keyboard:
         self.user_input = GetInput()
 
     def treat_input(self):
+        global sound_enabled
         while True:
             resume_pomodoro = self.user_input.get_answer()
             if resume_pomodoro == 's':
-                print('Continuando.'.center(Utilities.terminal_size()), end='\r', flush=True)
+                print()
                 break
             elif resume_pomodoro == 'n':
-                print('\nAdeus!'.center(Utilities.terminal_size()), end='\r', flush=True)
                 exit()
+            elif resume_pomodoro == 'p':
+                sound_enabled = not sound_enabled
+                status = 'ativado' if sound_enabled else 'desativado'
+                print(f'Som {status}.'.center(Utilities.terminal_size()), end='', flush=True)
+                self.reset()
             else:
-                print('Resposta inválida! use [S/N]\n'.center(Utilities.terminal_size()), end='\r', flush=True)
+                print('Resposta inválida! use [S/N] - Som[P]\n'.center(Utilities.terminal_size()), end='\r', flush=True)
                 self.reset()
         self.reset()
 
@@ -98,7 +105,7 @@ class FileManager:
         self.home = os.path.expanduser('~')
         self.path = os.path.join(self.home, 'Downloads')
         self.can_delete = False
-        self.double_name = False
+        self.two_letters = False
         self.nome_reserva = ''
         self.name3 = False
 
@@ -133,11 +140,11 @@ class FileManager:
     def escolhe_nome(self, lista_nome):
         nome1, nome2 = lista_nome[0], lista_nome[1]
         if len(nome1) == 2:
-            self.double_name = True
+            self.two_letters = True
             self.nome_reserva = nome1
             return nome2
 
-        self.double_name = False
+        self.two_letters = False
         self.nome_reserva = ''
 
         if len(nome1) == 3:
@@ -152,6 +159,7 @@ class MoveMouse:
         pyautogui.PAUSE = 0.01
         self.manager = FileManager()
         self.seconds = 0
+        self._sound_thread = threading.Thread(target=Utilities.play_sound)
 
     def write(self, text):
         copy(text)
@@ -183,22 +191,24 @@ class MoveMouse:
         pyautogui.hotkey('esc')
 
     def move_mouse(self, x=1270, y=570):
-        pyautogui.moveTo(x, y=y)
+        pyautogui.moveTo(x=x, y=y)
 
     def main(self, x=1270, y=580):
         nome_time = self.partida_name(self.gol_info_loop())
-        nome_time_show = self.manager.nome_reserva if self.manager.double_name else nome_time
+        nome_time_show = self.manager.nome_reserva if self.manager.two_letters else nome_time
 
         print(f'{nome_time_show} - {self.seconds:.2f}s'.center(Utilities.terminal_size()), end='\r', flush=True)
         print('\n')
 
-        threading.Thread(target=Utilities.play_sound).start()
+        if sound_enabled:
+            threading.Thread(target=Utilities.play_sound).start()
         self.open_search()
         sleep(0.1)
 
         self.move_mouse(x, y)
         self.write(nome_time)
         self.click()
+
         if self.manager.name3:
             self.move_mouse(x=1260)
             sleep(0.2)
@@ -206,6 +216,7 @@ class MoveMouse:
 
         print()
         threading.Thread(target=self.clean_search).start()
+
         Keyboard().treat_input()
         FileManager().delete_position()
 
@@ -230,10 +241,10 @@ class MoveMouse:
             except KeyboardInterrupt:
                 print()
                 Keyboard().treat_input()
+                FileManager().delete_position()
                 counter = 0
 
             counter += 0.2
-
 
 class Main:
     def __init__(self):
@@ -242,7 +253,6 @@ class Main:
 
     def run(self):
         FileManager().delete_position()
-        sleep(0.5)
 
         try:
             while True:
