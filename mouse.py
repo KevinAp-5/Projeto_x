@@ -2,14 +2,11 @@ import os
 import json
 import pyautogui
 import threading
-from sys import argv, platform
 from time import sleep
 from glob import glob
 from playsound import playsound
 from clipboard import copy
 from os import get_terminal_size
-
-sound_enabled = True  # Variável global para rastrear o estado do som
 
 class Utilities:
     @staticmethod
@@ -18,10 +15,6 @@ class Utilities:
             return int(get_terminal_size()[0])
         except OSError:
             print("Rode o programa em outro terminal")
-
-    @staticmethod
-    def get_argv():
-        return [int(float(item.strip())) for item in argv[1:3]]
 
     @staticmethod
     def banner(title):
@@ -42,11 +35,6 @@ class Utilities:
             except KeyboardInterrupt:
                 sleep_time = 0
 
-    @staticmethod
-    def play_sound():
-        if sound_enabled:
-            playsound('sound.wav')
-
 
 class GetInput:
     def __init__(self):
@@ -66,10 +54,23 @@ class GetInput:
             if self.text:
                 return self.text
 
+class SoundManager:
+    def __init__(self):
+        self.enabled = True
+
+    def toggle_sound(self):
+        self.enabled = not self.enabled
+        status = 'ativado' if self.enabled else 'desativado'
+        print(f'Som {status}.'.center(Utilities.terminal_size()), end='', flush=True)
+
+    def play_sound(self):
+        if self.enabled:
+            playsound('sound.wav')
 
 class Keyboard:
-    def __init__(self):
+    def __init__(self, sound_manager):
         self.user_input = GetInput()
+        self.sound_manager = sound_manager
 
     def treat_input(self):
         global sound_enabled
@@ -81,9 +82,7 @@ class Keyboard:
             elif resume_pomodoro == 'n':
                 exit()
             elif resume_pomodoro == 'p':
-                sound_enabled = not sound_enabled
-                status = 'ativado' if sound_enabled else 'desativado'
-                print(f'Som {status}.'.center(Utilities.terminal_size()), end='', flush=True)
+                self.sound_manager.toggle_sound()
                 self.reset()
             else:
                 print('Resposta inválida! use [S/N] - Som[P]\n'.center(Utilities.terminal_size()), end='\r', flush=True)
@@ -155,11 +154,13 @@ class FileManager:
 
 
 class MoveMouse:
-    def __init__(self):
+    def __init__(self, manager, sound_manager, keyboard):
         pyautogui.PAUSE = 0.01
-        self.manager = FileManager()
         self.seconds = 0
-        self._sound_thread = threading.Thread(target=Utilities.play_sound)
+        self.manager = manager
+        self.sound_manager = sound_manager
+        self.keyboard = keyboard
+        self.sound_thread = threading.Thread(target=self.sound_manager.play_sound)
 
     def write(self, text):
         copy(text)
@@ -199,9 +200,10 @@ class MoveMouse:
 
         print(f'{nome_time_show} - {self.seconds:.2f}s'.center(Utilities.terminal_size()), end='\r', flush=True)
         print('\n')
+ 
+        if self.sound_manager.enabled:
+            self.sound_thread.start()
 
-        if sound_enabled:
-            threading.Thread(target=Utilities.play_sound).start()
         self.open_search()
         sleep(0.1)
 
@@ -217,8 +219,8 @@ class MoveMouse:
         print()
         threading.Thread(target=self.clean_search).start()
 
-        Keyboard().treat_input()
-        FileManager().delete_position()
+        self.keyboard.treat_input()
+        self.manager.delete_position()
 
     def gol_info_loop(self):
         counter = 0
@@ -240,8 +242,8 @@ class MoveMouse:
                 sleep(0.2)
             except KeyboardInterrupt:
                 print()
-                Keyboard().treat_input()
-                FileManager().delete_position()
+                self.keyboard.treat_input()
+                self.manager.delete_position()
                 counter = 0
 
             counter += 0.2
@@ -250,16 +252,19 @@ class Main:
     def __init__(self):
         print(Utilities.banner('Mineirinho Scanner'))
         Utilities.nice_line()
+        self.file_manager = FileManager()
+        self.sound_manager = SoundManager()
+        self.keyboard = Keyboard(self.sound_manager)
 
     def run(self):
-        FileManager().delete_position()
+        self.file_manager.delete_position()
 
         try:
             while True:
-                MoveMouse().main()
+                MoveMouse(self.file_manager, self.sound_manager, self.keyboard).main()
         except KeyboardInterrupt:
             print()
-            Keyboard().treat_input()
+            self.keyboard.treat_input()
 
 
 if __name__ == '__main__':
