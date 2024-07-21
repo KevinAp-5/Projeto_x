@@ -68,8 +68,8 @@ function timer() {
             
             // Toca o som quando um gol é detectado e o arquivo é baixado, se o som estiver habilitado
             if (soundEnabled) {
-                playSound(440, 0.5);
-                playSound(293.6, 0.5)
+                playSound(440, 0.7);
+                playSound(293.6, 0.7)
             }
 
             arquivoBaixado = true; // Marque o arquivo como baixado
