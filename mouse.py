@@ -13,7 +13,10 @@ from os import get_terminal_size
 class Utilities:
     @staticmethod
     def terminal_size():
-        return int(get_terminal_size()[0])
+        try:
+            return int(get_terminal_size()[0])
+        except OsError:
+            print("Rode o programa em outro terminal")
 
     @staticmethod
     def get_argv():
@@ -198,10 +201,11 @@ class MoveMouse:
         self.click()
         if self.manager.name3:
             self.move_mouse(x=1260)
-            pyautogui.click()
+            sleep(0.2)
+            threading.Thread(target=pyautogui.click).start()
 
         print()
-        threading.Thread(target=self.clean_search()).start()
+        threading.Thread(target=self.clean_search).start()
         Keyboard().treat_input()
         FileManager().delete_position()
 
