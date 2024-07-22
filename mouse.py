@@ -73,7 +73,6 @@ class Keyboard:
         self.sound_manager = sound_manager
 
     def treat_input(self):
-        global sound_enabled
         while True:
             resume_pomodoro = self.user_input.get_answer()
             if resume_pomodoro == 's':
@@ -146,7 +145,7 @@ class FileManager:
         self.two_letters = False
         self.nome_reserva = ''
 
-        self.name3 = True if len(nome3) == 3 else False
+        self.name3 = True if len(nome1) == 3 else False
         return nome1
 
 
