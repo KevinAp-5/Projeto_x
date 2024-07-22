@@ -146,10 +146,7 @@ class FileManager:
         self.two_letters = False
         self.nome_reserva = ''
 
-        if len(nome1) == 3:
-            self.name3 = True
-        else:
-            self.name3 = False
+        self.name3 = True if len(nome3) == 3 else False
         return nome1
 
 

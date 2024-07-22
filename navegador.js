@@ -53,7 +53,7 @@ function timer() {
         if (times_gol) {
             console.log('Gol encontrado.');
             console.log(nome);
-            const posicao = times_gol.getBoundingClientRect().toJSON();
+            times_gol.getBoundingClientRect().toJSON();
             const jsonString = JSON.stringify({
                 'nome': nome,
                 'nome2': nome2
