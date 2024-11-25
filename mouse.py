@@ -172,16 +172,18 @@ class MoveMouse:
 
     def open_search(self):
         self.clean_clipboard()
-        sleep(0.3)
+        sleep(0.2)
         pyautogui.hotkey('esc')
         pyautogui.hotkey('f3')
 
     def click(self):
         sleep(0.35)
+        if (self.manager.name3):
+            sleep(1)
         pyautogui.click()
 
     def clean_search(self):
-        sleep(1.7)
+        sleep(1)
         pyautogui.hotkey('f3')
         pyautogui.hotkey('backspace')
         sleep(0.1)
@@ -196,30 +198,30 @@ class MoveMouse:
 
     def execute_search(self, nome_time, x=1270, y=580):
         self.open_search()
-        sleep(0.1)
+        sleep(0.3)
         self.move_mouse(x, y)
         self.write(nome_time)
-        self.click()
+        # self.click()
 
     def additional_click_for_name3(self):
         if self.manager.name3:
-            self.move_mouse(x=1260)
-            sleep(0.2)
             threading.Thread(target=pyautogui.click).start()
 
-    def main(self, x=1270, y=580):
+    def main(self, x=1320, y=580):
         nome_time = self.partida_name(self.gol_info_loop())
         nome_time_show = self.manager.nome_reserva if self.manager.two_letters else nome_time
 
         print(f'{nome_time_show} - {self.seconds:.2f}s'.center(Utilities.terminal_size()), end='\r', flush=True)
         print('\n')
 
-        self.handle_sound()
+        # self.handle_sound()
         self.execute_search(nome_time, x, y)
-        self.additional_click_for_name3()
-
+        # self.additional_click_for_name3()
         print()
-        threading.Thread(target=self.clean_search).start()
+        # threading.Thread(target=self.clean_search).start()
+        self.clean_search()
+        self.clean_clipboard()
+
 
         self.keyboard.treat_input()
         self.manager.delete_position()
